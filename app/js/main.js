@@ -17,7 +17,8 @@ $(function () {
      * timer start
      */
 
-    const deadline = new Date(2023, 9, 26); // конечная дата, например 1 декабря 2023
+    const deadline = new Date(new Date().getFullYear(), new Date().getMonth() + 1,
+        1); // конечная дата, например 1 декабря 2023
     // id таймера
     let timerId = null;
     // склонение числительных
@@ -27,20 +28,19 @@ $(function () {
     // вычисляем разницу дат и устанавливаем оставшееся времени в качестве содержимого элементов
     function countdownTimer() {
         const diff = deadline - new Date();
+
         if (diff <= 0) {
             clearInterval(timerId);
         }
         const days = diff > 0 ? Math.floor(diff / 1000 / 60 / 60 / 24) : 0;
         const hours = diff > 0 ? Math.floor(diff / 1000 / 60 / 60) % 24 : 0;
         const minutes = diff > 0 ? Math.floor(diff / 1000 / 60) % 60 : 0;
-
         if (days > 10) {
             splitIntoPieces(days, $days);
         } else {
             $days.forEach((num) => {
                 num.innerHTML = '<span>0</span>' + `<span>${days}</span>`;
             })
-
         }
         if (hours > 10) {
             splitIntoPieces(hours, $hours);
@@ -57,7 +57,6 @@ $(function () {
                 num.innerHTML = '<span>0</span>' + `<span>${minutes}</span>`;
             })
         }
-
         // $seconds.innerHTML = seconds < 10 ? '0' + seconds : seconds;
         $days.forEach((num) => {
             num.dataset.title = declensionNum(days, ['день', 'дня', 'дней']);
@@ -75,7 +74,9 @@ $(function () {
     function splitIntoPieces(number, content) {
         let numberToString = String(number)
         let arrayNumbers = numberToString.split('')
-        content = content.innerHTML = `<span>${arrayNumbers[0]}</span><span>${arrayNumbers[1]}</span>`
+        content.forEach((html) => {
+            content = html.innerHTML = `<span>${arrayNumbers[0]}</span><span>${arrayNumbers[1]}</span>`
+        })
         return content;
     }
     // получаем элементы, содержащие компоненты даты
