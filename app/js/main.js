@@ -48,7 +48,6 @@ $(function () {
             $hours.forEach((num) => {
                 num.innerHTML = '<span>0</span>' + `<span>${hours}</span>`;
             })
-
         }
         if (minutes > 10) {
             splitIntoPieces(minutes, $minutes);
@@ -97,11 +96,25 @@ $(function () {
         $('body').toggleClass('hidden')
         $('.header-menu-inner').fadeToggle()
     })
-    $('.header-menu__link').on('click', function () {
-        $('.btn-menu').removeClass('open')
-        $('body').removeClass('hidden')
-        $('.header-menu-inner').fadeOut()
-    })
+    if (window.innerWidth < 1279) {
+        $('.header-menu__link').on('click', function () {
+            $('.btn-menu').removeClass('open')
+            $('body').removeClass('hidden')
+            $('.header-menu-inner').fadeOut()
+        })
+    }
+  
+    // $('.header-menu__link').on('click', function (event) {
+    //     event.preventDefault();
+    //     let href = $(this).attr("href");
+
+    //     $("html, body").animate({
+    //         scrollTop: $(href).offset().top + $('header').height()
+    //     }, {
+    //         duration: 370, // по умолчанию «400»
+    //         easing: "linear" // по умолчанию «swing»
+    //     });
+    // });
 
     /** 
      * Подцветка активных пунктов меню
